@@ -27,7 +27,7 @@ router.post('/withdrawals', validateTransaction, cashierController.processWithdr
 
 //ruta de cliente
 
-router.post('/customers', validateCustomer, customerController.create);
+router.post('/customers', validateCustomer, customerController.createCustomer);
 router.get('/customers/:customerId/accounts', customerController.getCustomerAccounts);
 
 //ruta de transacciones
