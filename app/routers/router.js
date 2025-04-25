@@ -16,9 +16,9 @@ const {
 } = require('../Middlewares/accountValidation.js');
 
 // Rutas de cuentas
-router.post('/accounts/create', validateAccountCreation, accountController.createAccount);
-router.put('/accounts/:id/suspend', accountController.suspendAccount);
-router.get('/accounts/:accountNumber', accountController.getAccountDetails);
+router.post('api/accounts/create', validateAccountCreation, accountController.createAccount);
+router.put('api/accounts/:id/suspend', accountController.suspendAccount);
+router.get('api/accounts/:accountNumber', accountController.getAccountDetails);
 
 //Rutas de cajero
 
