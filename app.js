@@ -2,11 +2,8 @@ const express = require('express');
 const cors = require('cors');
 const db = require('./config/db.config.js');
 
-// Importar rutas
-const customerRoutes = require('./routes/customerService.routes');
-const cashierRoutes = require('./routes/cashier.routes');
-const accountRoutes = require('./routes/accounts.routes');
-const transactionRoutes = require('./routes/transactions.routes');
+// Importar el router principal (asegúrate que la ruta es correcta)
+const mainRouter = require('./routers/router.js'); // Ajusta esta ruta según tu estructura
 
 const app = express();
 
@@ -25,11 +22,8 @@ db.sequelize.sync({ alter: true })
   .then(() => console.log('Modelos sincronizados'))
   .catch(err => console.error('Error al sincronizar modelos:', err));
 
-// Rutas
-app.use('/api', customerRoutes);
-app.use('/api', cashierRoutes);
-app.use('/api', accountRoutes);
-app.use('/api', transactionRoutes);
+// Montar todas las rutas bajo /api
+app.use('/api', mainRouter); // Usa el router principal
 
 // Ruta de prueba
 app.get('/', (req, res) => {
