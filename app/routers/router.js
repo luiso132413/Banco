@@ -1,5 +1,5 @@
 let express = require('express');
-let router = express.Router();
+let mainRouter = express.Router();
 
 // Controladores
 const accountController = require('../Controllers/accounts.controller.js');
@@ -16,23 +16,23 @@ const {
 } = require('../Middlewares/accountValidation.js');
 
 // Rutas de cuentas
-router.post('/api/accounts/create', validateAccountCreation, accountController.createAccount);
-router.put('/api/accounts/:id/suspend', accountController.suspendAccount);
-router.get('/api/accounts/:accountNumber', accountController.getAccountDetails);
+mainRouter.post('/api/accounts/create', validateAccountCreation, accountController.createAccount);
+mainRouter.put('/api/accounts/:id/suspend', accountController.suspendAccount);
+mainRouter.get('/api/accounts/:accountNumber', accountController.getAccountDetails);
 
 //Rutas de cajero
 
-router.post('/deposits', validateTransaction, cashierController.processDeposit);
-router.post('/withdrawals', validateTransaction, cashierController.processWithdrawal);
+mainRouter.post('/deposits', validateTransaction, cashierController.processDeposit);
+mainRouter.post('/withdrawals', validateTransaction, cashierController.processWithdrawal);
 
 //ruta de cliente
 
-router.post('/customers', validateCustomer, customerController.createCustomer);
-router.get('/customers/:customerId/accounts', customerController.getCustomerAccounts);
+mainRouter.post('/customers', validateCustomer, customerController.createCustomer);
+mainRouter.get('/customers/:customerId/accounts', customerController.getCustomerAccounts);
 
 //ruta de transacciones
 
-router.post('/transfers', validateTransfer, transactionController.processTransfer);
-router.get('/accounts/:account_id/transactions', transactionController.getTransactionHistory);
+mainRouter.post('/transfers', validateTransfer, transactionController.processTransfer);
+mainRouter.get('/accounts/:account_id/transactions', transactionController.getTransactionHistory);
 
-module.exports = router;
+module.exports = mainRouter;
