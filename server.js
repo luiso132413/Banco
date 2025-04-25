@@ -4,8 +4,8 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const db = require('.config/db.config.js'); // Asegúrate que esta ruta sea correcta
-let mainRouter = require('.routers/router.js'); // Ruta del router principal
+const db = require('./config/db.config.js'); // Asegúrate que esta ruta sea correcta
+let mainRouter = require('./routers/router.js'); // Ruta del router principal
 
 const app = express();
 
