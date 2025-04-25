@@ -1,9 +1,9 @@
 const express = require('express');
 const cors = require('cors');
-const db = require('./config/db.config.js');
+const db = require('../Banco/app/config/db.config.js');
 
 // Importar el router principal (asegúrate que la ruta es correcta)
-const mainRouter = require('./routers/router.js'); // Ajusta esta ruta según tu estructura
+let mainRouter = require('../Banco/app/routers/router.js'); // Ajusta esta ruta según tu estructura
 
 const app = express();
 
