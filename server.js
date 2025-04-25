@@ -1,38 +1,51 @@
 
 
+// server.js
 const express = require('express');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const db = require('./app/config/db.config.js'); // Asegúrate que esta ruta sea correcta
+const mainRouter = require('./app/routers/router.js'); // Ruta del router principal
+
 const app = express();
 
-var bodyParser = require('body-parser');
- 
-const db = require('./app/config/db.config.js');
-  
-// force: true will drop the table if it already exists
-db.sequelize.sync({force: true}).then(() => {
-  console.log('Drop and Resync with { force: true }');
-}); 
-
-let router = require('./app/routers/router.js');
-
-const cors = require('cors')
+// CORS config
 const corsOptions = {
-  origin: 'http://localhost:4200',
+  origin: 'http://localhost:4200', // O ajusta si usas otro frontend
   optionsSuccessStatus: 200
-}
+};
 app.use(cors(corsOptions));
 
+// Middlewares
 app.use(bodyParser.json());
-app.use('/', router);
-app.get("/",(req,res) => {
-  
-  res.json({mesage:"Bienvenido Estudiantes de UMG"});
-})
+app.use(express.urlencoded({ extended: true }));
 
-// Create a Server
-const server = app.listen(8080, function () {
- 
-  let host = server.address().address
-  let port = server.address().port
- 
-  console.log("App listening at http://%s:%s", host, port); 
-})
+// Conexión a la base de datos
+db.sequelize.authenticate()
+  .then(() => console.log(' Conexión a la base de datos establecida'))
+  .catch(err => console.error(' Error al conectar a la base de datos:', err));
+
+// Sincronización de modelos (usa `alter: true` para evitar perder datos)
+db.sequelize.sync({ alter: true })
+  .then(() => console.log(' Modelos sincronizados'))
+  .catch(err => console.error(' Error al sincronizar modelos:', err));
+
+// Rutas
+app.use('/api', mainRouter); // Todas las rutas van bajo /api
+app.get('/', (req, res) => {
+  res.json({ mensaje: 'Bienvenido Estudiantes de UMG' });
+});
+
+// Manejo de errores
+app.use((err, req, res, next) => {
+  console.error('Error:', err.stack);
+  res.status(500).json({ error: 'Error interno del servidor' });
+});
+
+// Iniciar servidor
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => {
+  console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
+});
+
+module.exports = app;
