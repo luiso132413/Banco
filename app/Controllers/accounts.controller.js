@@ -12,28 +12,34 @@ exports.createAccount = async (req, res) => {
   try {
     const { customer_id, account_type } = req.body;
     
-    const customer = await Customer.findByPk(customer_id);
+    // Convertir a número (por si acaso)
+    const customerId = parseInt(customer_id);
+
+    // Depuración
+    console.log(`Buscando cliente con ID: ${customerId}`);
+
+    const customer = await Customer.findByPk(customerId);
     if (!customer) {
+      console.error(`Cliente no encontrado para ID: ${customerId}`);
       return res.status(404).json({ error: 'Cliente no encontrado' });
     }
 
     const account_number = await Account.generateAccountNumber();
-
     const account = await Account.create({
-      customer_id,
+      customer_id: customerId,
       account_number,
       account_type,
       balance: 0.00,
       status: 'activa'
     });
 
+    console.log('Cuenta creada:', account);
     res.status(201).json(account);
   } catch (error) {
     console.error('Error al crear cuenta:', error);
     res.status(500).json({ error: 'Error interno del servidor' });
   }
 };
-
 exports.suspendAccount = async (req, res) => {
   try {
     const { id } = req.params;
