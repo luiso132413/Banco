@@ -4,7 +4,7 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const db = require('./app/config/db.config.js'); // Asegúrate que esta ruta sea correcta
+const db = require('../Banco/app/config/db.config.js'); // Asegúrate que esta ruta sea correcta
 let mainRouter = require('../Banco/app/routers/router.js'); // Ruta del router principal
 
 const app = express();
