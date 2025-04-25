@@ -16,7 +16,7 @@ const {
 } = require('../Middlewares/accountValidation.js');
 
 // Rutas de cuentas
-router.post('/accounts', validateAccountCreation, accountController.createAccount);
+router.post('/accounts/create', validateAccountCreation, accountController.createAccount);
 router.put('/accounts/:id/suspend', accountController.suspendAccount);
 router.get('/accounts/:accountNumber', accountController.getAccountDetails);
 
