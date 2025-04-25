@@ -16,9 +16,9 @@ const {
 } = require('../Middlewares/accountValidation.js');
 
 // Rutas de cuentas
-router.post('api/accounts/create', validateAccountCreation, accountController.createAccount);
-router.put('api/accounts/:id/suspend', accountController.suspendAccount);
-router.get('api/accounts/:accountNumber', accountController.getAccountDetails);
+router.post('/api/accounts/create', validateAccountCreation, accountController.createAccount);
+router.put('/api/accounts/:id/suspend', accountController.suspendAccount);
+router.get('/api/accounts/:accountNumber', accountController.getAccountDetails);
 
 //Rutas de cajero
 
@@ -27,7 +27,7 @@ router.post('/withdrawals', validateTransaction, cashierController.processWithdr
 
 //ruta de cliente
 
-router.post('/customers', validateCustomer, customerController.createCustomer);
+router.post('/customers', validateCustomer, customerController.create);
 router.get('/customers/:customerId/accounts', customerController.getCustomerAccounts);
 
 //ruta de transacciones

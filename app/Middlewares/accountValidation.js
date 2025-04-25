@@ -11,6 +11,9 @@ exports.validateCustomer = [
   body('phone')
     .notEmpty().withMessage('El teléfono es requerido')
     .isMobilePhone().withMessage('Teléfono inválido')
+  body('adress')
+    .notEmpty().withMessage('La dirección es requerida')
+    .isBtcAddress().whithMessage('Direccion invalidas')
 ];
 
 exports.validateAccountCreation = [
